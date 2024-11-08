@@ -14,9 +14,20 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::create(["name" => "pustakawan"]);
-        Permission::create(["name" => "edit_user"]);
-        Role::create(["name" => "mahasiswa"]);
-        Permission::create(["name" => "view_book"]);
+        // Role Admin
+        Role::create(['name' => 'admin']);
+        Permission::create(['name' => 'kelola_akun']);
+        
+        // Role Pustakawan
+        Role::create(['name' => 'pustakawan']);
+        Permission::create(['name' => 'kelola_buku']);
+        Permission::create(['name' => 'kelola_pengembalian']);
+        Permission::create(['name' => 'kelola_peminjaman']);
+
+        // Role Member
+        Role::create(['name' => 'member']);
+        Permission::create(['name' => 'lihat_buku']);
+        Permission::create(['name' => 'pinjam_buku']);
+
     }
 }

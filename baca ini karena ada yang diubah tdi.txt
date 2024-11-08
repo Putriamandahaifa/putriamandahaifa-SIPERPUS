@@ -1,0 +1,82 @@
+$ php artisan db:seed
+PHP Warning:  Module "openssl" is already loaded in Unknown on line 0
+
+
+  at vendor\spatie\laravel-permission\src\Exceptions\RoleDoesNotExist.php:11
+      7▕ class RoleDoesNotExist extends InvalidArgumentException
+      8▕ {
+      9▕     public static function named(string $roleName, ?string $guardName)
+     10▕     {
+  ➜  11▕         return new static("There is no role named `{$roleName}` for guard `{$guardName}`.");
+     12▕     }
+     13▕
+     14▕     /**
+     15▕      * @param  int|string  $roleId
+
+  
+
+  at vendor\spatie\laravel-permission\src\Exceptions\RoleAlreadyExists.php:11
+      7▕ class RoleAlreadyExists extends InvalidArgumentException
+      8▕ {
+      9▕     public static function create(string $roleName, string $guardName)
+     10▕     {
+  ➜  11▕         return new static("A role `{$roleName}` already exists for guard `{$guardName}`.");
+     12▕     }
+     13▕ }
+     14▕
+
+  at vendor\spatie\laravel-permission\src\Models\Role.php:58
+     54▕                 $attributes[$teamsKey] = getPermissionsTeamId();
+     55▕             }
+     56▕         }
+     57▕         if (static::findByParam($params)) {
+  ➜  58▕             throw RoleAlreadyExists::create($attributes['name'], $attributes['guard_name']);
+     59▕         }
+     60▕
+     61▕         return static::query()->create($attributes);
+     62▕     }
+
+  at vendor\laravel\framework\src\Illuminate\Database\Connection.php:820
+    816▕         // message to include the bindings with SQL, which will make this exception a
+    817▕         // lot more helpful to the developer instead of just the database's errors.
+    818▕         catch (Exception $e) {
+    819▕             if ($this->isUniqueConstraintError($e)) {
+  ➜ 820▕                 throw new UniqueConstraintViolationException(
+    821▕                     $this->getName(), $query, $this->prepareBindings($bindings), $e
+    822▕                 );
+    823▕             }
+    824▕
+
+  at vendor\laravel\framework\src\Illuminate\Database\Connection.php:825
+    821▕                 //     $this->getName(), $query, $this->prepareBindings($bindings), $e
+    822▕                 // );
+    823▕             }
+    824▕
+  ➜ 825▕             throw new QueryException(
+    826▕                 $this->getName(), $query, $this->prepareBindings($bindings), $e
+    827▕             );
+    828▕         }
+    829▕     }
+
+  at vendor\spatie\laravel-permission\src\Exceptions\PermissionAlreadyExists.php:11
+      7▕ class PermissionAlreadyExists extends InvalidArgumentException
+      8▕ {
+      9▕     public static function create(string $permissionName, string $guardName)
+     10▕     {
+  ➜  11▕         return new static("A `{$permissionName}` permission already exists for guard `{$guardName}`.");
+     12▕     }
+     13▕ }
+     14▕
+
+  at vendor\spatie\laravel-permission\src\Models\Permission.php:49
+     45▕
+     46▕         $permission = static::getPermission(['name' => $attributes['name'], 'guard_name' => $attributes['guard_name']]);
+     47▕
+     48▕         if ($permission) {
+  ➜  49▕             throw PermissionAlreadyExists::create($attributes['name'], $attributes['guard_name']);
+     50▕         }
+     51▕
+     52▕         return static::query()->create($attributes);
+     53▕     }
+
+then success done
